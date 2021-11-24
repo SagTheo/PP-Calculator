@@ -1,9 +1,23 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container, .digits div, .operators div {
+    border: 1px black solid;
+    border-radius: 5px;
+}
+
+.digits div, .operators div {
+    margin: 0.1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
 /* Style for the calculator */
 .container {
     width: 95%;
     height: 25rem;
     margin: 15% auto;
-    border: 1px black solid;
 }
 
 /* Style for the keys */
@@ -15,7 +29,6 @@
 
 .digits {
     width: 75%;
-    border: 1px black solid;
     display: grid;
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: repeat(3, 1fr);
@@ -29,7 +42,6 @@
 
 .operators {
     width: 20%;
-    border: 1px black solid;
     display: grid;
     grid-template-rows: repeat(5, 1fr);
 }
