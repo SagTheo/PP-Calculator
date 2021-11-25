@@ -3,6 +3,7 @@ const digits = document.querySelectorAll('.digit')
 const operators = document.querySelectorAll('.operator')
 const clear = document.querySelector('.clear')
 const equals = document.querySelector('.equals')
+const delete1 = document.querySelector('.delete1')
 
 let calculation = []
 let currentOperand = ''
@@ -28,11 +29,19 @@ operators.forEach(operator => {
 equals.addEventListener('click', () => {
     calculation.push(currentOperand)
     currentOperand = ''
-    console.log(calc(calculation, calculation[1]))
+    screen.textContent = calc(calculation, calculation[1])
     calculation = []
 })
 
+// Clears the screen
+clear.addEventListener('click', () => {
+    screen.textContent = ''
+})
 
+// Deletes the last character displayed on the screen
+delete1.addEventListener('click', () => {
+    
+})
 
 // Functions
 // 'calc()' does the math for two operands only
