@@ -5,32 +5,25 @@ const clear = document.querySelector('.clear')
 const equals = document.querySelector('.equals')
 const delete1 = document.querySelector('.delete1')
 
-let calculation = []
-let currentOperand = ''
 
-// Adds the number that is clicked on to 'currentOperand'
+// Adds the number that is clicked on to the screen
 digits.forEach(digit => {
     digit.addEventListener('click', () => {
-        currentOperand += digit.textContent
+        screen.textContent += digit.textContent
     })
 })
 
-// Adds the first operand and the operator to 'calculation', and resets 'currentOperand'
+// Adds the operator that is clicked on to the screen
 operators.forEach(operator => {
     operator.addEventListener('click', () => {
-        calculation.push(currentOperand)
-        currentOperand = ''
-        calculation.push(operator.textContent)
+        screen.textContent += operator.textContent
     })
 })
 
-// Adds the second operand to 'calculation', calls 'calc()', 
-// and resets 'currentOperand' and 'calculation'
+// Displays the result of the operation on the screen
 equals.addEventListener('click', () => {
-    calculation.push(currentOperand)
-    currentOperand = ''
-    screen.textContent = calc(calculation, calculation[1])
-    calculation = []
+    let operation = screen.textContent.split(' ')
+    screen.textContent = calc(operation, operation[1])
 })
 
 // Clears the screen
@@ -40,7 +33,9 @@ clear.addEventListener('click', () => {
 
 // Deletes the last character displayed on the screen
 delete1.addEventListener('click', () => {
-    
+    let delLastDigit = screen.textContent.split('')
+    delLastDigit.pop()
+    screen.textContent = delLastDigit.join('')
 })
 
 // Functions

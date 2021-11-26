@@ -6,10 +6,11 @@ Goal here is to practice logical thinking and JS
 To-do:
 
 -sort out how to handle decimals
--handle the fact that user can click on an operator more than once (will be added to array calculation and create a bug)
--make delete button functional
+-handle the fact that user can click on an operator more than once 
+        --> creates a bug: even if extra operator is removed thanks to the delete button, console throws an error --> may have to do with blank spaces added in the HTML tags of each operator
+-make delete button functional - done
 -handle really big numbers
--display characters on the screen as the user clicks on them
+-display characters on the screen as the user clicks on them - done
 
 
 Difficulties encountered:
