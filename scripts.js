@@ -22,8 +22,7 @@ operators.forEach(operator => {
 
 // Displays the result of the operation on the screen
 equals.addEventListener('click', () => {
-    let operation = screen.textContent.split(' ')
-    screen.textContent = calc(operation, operation[1])
+    screen.textContent = calc(screen.textContent)
 })
 
 // Clears the screen
@@ -39,18 +38,58 @@ delete1.addEventListener('click', () => {
 })
 
 // Functions
-// 'calc()' does the math for two operands only
-let calc = (array, sign) => {
-    let result
-
-    switch (sign) {
-        case '+':
-            return result = JSON.parse(array[0]) + JSON.parse(array[2])
-        case '-':
-            return result = JSON.parse(array[0]) - JSON.parse(array[2])
-        case 'x':
-            return result = JSON.parse(array[0]) * JSON.parse(array[2])
-        case '/':
-            return result = JSON.parse(array[0]) / JSON.parse(array[2])
+// 'calc()' does the operation
+let calc = (string) => {
+    let operand = ''
+    let result = []
+    for (let i = 0; i < string.length; i++) {
+        switch (string[i]) {
+            case '+':
+                result.push(operand)
+                result.push('+')
+                operand = ''
+                break;
+            case '-':
+                result.push(operand)
+                result.push('-')
+                operand = ''
+                break;
+            case 'x':
+                result.push(operand)
+                result.push('*')
+                operand = ''
+                break;
+            case '/':
+                result.push(operand)
+                result.push('/')
+                operand = ''
+                break;
+            default:
+                operand += string[i]
+        }
     }
+    result.push(operand)
+
+    let resultToDisplay = JSON.parse(result[0])
+    for (let j = 1; j < result.length; j++) {
+        switch (result[j]) {
+            case '+':
+                resultToDisplay += JSON.parse(result[j + 1])
+                j++
+                break;
+            case '-':
+                resultToDisplay -= JSON.parse(result[j + 1])
+                j++
+                break;
+            case '*':
+                resultToDisplay = resultToDisplay * JSON.parse(result[j + 1])
+                j++
+                break;
+            case '/':
+                resultToDisplay = resultToDisplay / JSON.parse(result[j + 1])
+                j++
+                break;
+        }
+    }
+    return resultToDisplay
 }
