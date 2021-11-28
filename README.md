@@ -3,7 +3,9 @@
 This project is about practicing styling an app with Bootstrap
 
 To-do:
-    -make an English version of the app
-    -add photos --> use modals to display photo when necessary?
-    -make app responsive
+    1 - add photos --> use modals to display photo when necessary?
+    2 - make app responsive
+    3 - make an English version of the app
+    
+    
 
