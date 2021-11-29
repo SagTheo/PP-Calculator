@@ -23,7 +23,7 @@ operators.forEach(operator => {
 
 // Displays the result of the operation on the screen
 equals.addEventListener('click', () => {
-    console.log(recursivePar(screen.textContent))
+    console.log(separateOp(screen.textContent))
     // screen.textContent = calc(screen.textContent)
 })
 
@@ -109,12 +109,84 @@ let calc = (string) => {
 // Calls calc() to do the operation within the parenthesis
 // Then: should drop the parenthesis for that operation and work its way
 //       up until no more parenthesis can be found in the string
-let recursivePar = (string) => {
-    let parenthesisOp = string.slice(string.indexOf('(') + 1, string.lastIndexOf(')'))
-    if (!parenthesisOp.includes('(') && !parenthesisOp.includes(')')) {
-        return calc(parenthesisOp)
-    } //else {
-    //     recursivePar(parenthesisOp)
-    // }
+// let recursivePar = (string) => {
+//     let parenthesisOp = string.slice(string.indexOf('(') + 1, string.lastIndexOf(')'))
+//     if (!parenthesisOp.includes('(') && !parenthesisOp.includes(')')) {
+//         return calc(parenthesisOp)
+//     } else {
+//         recursivePar(parenthesisOp)
+//     }
     // return parenthesisOp
+// }
+
+// Separates the operands from the operators and the parenthesis
+let separateOp = (string) => {
+    let operand = ''
+    let result = []
+    for (let i = 0; i < string.length; i++) {
+        switch (string[i]) {
+            case '(':
+                result.push('(')
+                break;
+            case ')':
+                if (operand !== '') {
+                    result.push(operand)
+                    operand = ''
+                }
+                result.push(')')
+                break;
+            case '+':
+                if (operand !== '') {
+                    result.push(operand)
+                operand = ''
+                }
+                result.push('+')
+                break;
+            case '-':
+                if (operand !== '') {
+                    result.push(operand)
+                    operand = ''
+                }
+                result.push('-')
+                break;
+            case 'x':
+                if (operand !== '') {
+                    result.push(operand)
+                    operand = ''
+                }
+                result.push('*')
+                break;
+            case '/':
+                if (operand !== '') {
+                    result.push(operand)
+                    operand = ''
+                }
+                result.push('/')
+                break;
+            default:
+                operand += string[i]
+        }
+    }
+    if (operand !== '') {
+        result.push(operand)
+    }
+    console.log(result)
+
+    // Finds the most nested operation within parenthesis
+    for (let j = 0; j < result.length; j++) {
+        if (result[j] === '(') {
+            for (let h = result.length - 1; h >= j; h--) {
+                if (result[h] === ')') {
+                    let parenthesisOp = result.slice(j + 1, h)
+                    if (!parenthesisOp.includes('(') && !parenthesisOp.includes(')')) {
+                        console.log(parenthesisOp)
+                    } else {
+                        result.splice(h, 1)
+                        break
+                    }
+                }
+            }
+        }
+    }
 }
+
