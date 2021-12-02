@@ -173,15 +173,18 @@ let separateOp = (string) => {
     console.log(result)
 
     // Finds the most nested operation within parenthesis
-    for (let j = 0; j < result.length; j++) {
-        if (result[j] === '(') {
-            for (let h = result.length - 1; h >= j; h--) {
-                if (result[h] === ')') {
-                    let parenthesisOp = result.slice(j + 1, h)
+    let resultBis = result.slice() // Creates shallow copy of result
+    for (let j = 0; j < resultBis.length; j++) {
+        if (resultBis[j] === '(') {
+            for (let h = resultBis.length - 1; h >= j; h--) {
+                if (resultBis[h] === ')') {
+                    let parenthesisOp = resultBis.slice(j + 1, h)
                     if (!parenthesisOp.includes('(') && !parenthesisOp.includes(')')) {
-                        console.log(parenthesisOp)
+                        // Replaces in 'result' the most nested parenthesis block by the result of its operation
+                        result.splice(j, parenthesisOp.length + 2, calc(parenthesisOp))
+                        console.log(result)
                     } else {
-                        result.splice(h, 1)
+                        resultBis.splice(h, 1)
                         break
                     }
                 }
