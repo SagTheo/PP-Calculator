@@ -23,8 +23,7 @@ operators.forEach(operator => {
 
 // Displays the result of the operation on the screen
 equals.addEventListener('click', () => {
-    console.log(separateOp(screen.textContent))
-    // screen.textContent = calc(screen.textContent)
+    screen.textContent = separateOp(screen.textContent)
 })
 
 // Clears the screen
@@ -49,75 +48,61 @@ parenthesis.forEach(par => {
 // Functions
 // calc() does the operation
 // ! Doesn't handle the priority of operators yet !
-let calc = (string) => {
+let calc = (array) => {
     let operand = ''
-    let result = []
-    for (let i = 0; i < string.length; i++) {
-        switch (string[i]) {
+    let finalResult = []
+    for (let i = 0; i < array.length; i++) {
+        switch (array[i]) {
             case '+':
-                result.push(operand)
+                finalResult.push(operand)
                 operand = ''
-                result.push('+')
+                finalResult.push('+')
                 break;
             case '-':
-                result.push(operand)
+                finalResult.push(operand)
                 operand = ''
-                result.push('-')
+                finalResult.push('-')
                 break;
             case 'x':
-                result.push(operand)
+                finalResult.push(operand)
                 operand = ''
-                result.push('*')
+                finalResult.push('*')
                 break;
             case '/':
-                result.push(operand)
+                finalResult.push(operand)
                 operand = ''
-                result.push('/')
+                finalResult.push('/')
                 break;
             default:
-                operand += string[i]
+                operand += array[i]
         }
     }
-    result.push(operand)
+    finalResult.push(operand)
     
-    let resultToDisplay = JSON.parse(result[0])
-    for (let j = 1; j < result.length; j++) {
-        switch (result[j]) {
+    let resultToDisplay = JSON.parse(finalResult[0])
+    for (let j = 1; j < finalResult.length; j++) {
+        switch (finalResult[j]) {
             case '+':
-                resultToDisplay += JSON.parse(result[j + 1])
+                resultToDisplay += JSON.parse(finalResult[j + 1])
                 j++
                 break;
             case '-':
-                resultToDisplay -= JSON.parse(result[j + 1])
+                resultToDisplay -= JSON.parse(finalResult[j + 1])
                 j++
                 break;
             case '*':
-                resultToDisplay = resultToDisplay * JSON.parse(result[j + 1])
+                resultToDisplay = resultToDisplay * JSON.parse(finalResult[j + 1])
                 j++
                 break;
             case '/':
-                resultToDisplay = resultToDisplay / JSON.parse(result[j + 1])
+                resultToDisplay = resultToDisplay / JSON.parse(finalResult[j + 1])
                 j++
                 break;
         }
     }
-    return resultToDisplay
+    return JSON.stringify(resultToDisplay)
 }
 
-// Recursive function to figure out operations within parenthesis
-// Finds the most nested operation within parenthesis
-// Calls calc() to do the operation within the parenthesis
-// Then: should drop the parenthesis for that operation and work its way
-//       up until no more parenthesis can be found in the string
-// let recursivePar = (string) => {
-//     let parenthesisOp = string.slice(string.indexOf('(') + 1, string.lastIndexOf(')'))
-//     if (!parenthesisOp.includes('(') && !parenthesisOp.includes(')')) {
-//         return calc(parenthesisOp)
-//     } else {
-//         recursivePar(parenthesisOp)
-//     }
-    // return parenthesisOp
-// }
 
 // Separates the operands from the operators and the parenthesis
 let separateOp = (string) => {
@@ -154,7 +139,7 @@ let separateOp = (string) => {
                     result.push(operand)
                     operand = ''
                 }
-                result.push('*')
+                result.push('x') //This will be replaced by an actual multiplication symbol in the calc() function
                 break;
             case '/':
                 if (operand !== '') {
@@ -170,26 +155,31 @@ let separateOp = (string) => {
     if (operand !== '') {
         result.push(operand)
     }
-    console.log(result)
 
     // Finds the most nested operation within parenthesis
-    let resultBis = result.slice() // Creates shallow copy of result
-    for (let j = 0; j < resultBis.length; j++) {
-        if (resultBis[j] === '(') {
-            for (let h = resultBis.length - 1; h >= j; h--) {
-                if (resultBis[h] === ')') {
-                    let parenthesisOp = resultBis.slice(j + 1, h)
-                    if (!parenthesisOp.includes('(') && !parenthesisOp.includes(')')) {
-                        // Replaces in 'result' the most nested parenthesis block by the result of its operation
-                        result.splice(j, parenthesisOp.length + 2, calc(parenthesisOp))
-                        console.log(result)
-                    } else {
-                        resultBis.splice(h, 1)
-                        break
+    while (result.includes('(') || result.includes(')')) {
+        let resultBis = result.slice() // Creates shallow copy of 'result', allows to modify the array
+                                       // to find the most nested operation within parenthesis 
+                                       // without modifying the original one ('result') where we will 
+                                       // need to replace blocks of operation as long as there are 
+                                       // parenthesis in the global operation 
+        for (let j = 0; j < resultBis.length; j++) {
+            if (resultBis[j] === '(') {
+                for (let h = resultBis.length - 1; h >= j; h--) {
+                    if (resultBis[h] === ')') {
+                        let parenthesisOp = resultBis.slice(j + 1, h)
+                        if (!parenthesisOp.includes('(') && !parenthesisOp.includes(')')) {
+                            // Replaces in 'result' the most nested parenthesis block by the result of its operation
+                            result.splice(j, parenthesisOp.length + 2, calc(parenthesisOp))
+                        } else {
+                            resultBis.splice(h, 1)
+                            break
+                        }
                     }
                 }
             }
         }
     }
+    return calc(result)
 }
 
