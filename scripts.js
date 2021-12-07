@@ -123,7 +123,7 @@ let separateOp = (string) => {
             case '+':
                 if (operand !== '') {
                     result.push(operand)
-                operand = ''
+                    operand = ''
                 }
                 result.push('+')
                 break;
@@ -162,7 +162,8 @@ let separateOp = (string) => {
                                        // to find the most nested operation within parenthesis 
                                        // without modifying the original one ('result') where we will 
                                        // need to replace blocks of operation as long as there are 
-                                       // parenthesis in the global operation 
+                                       // parenthesis in the global operation
+        console.log(resultBis) 
         for (let j = 0; j < resultBis.length; j++) {
             if (resultBis[j] === '(') {
                 for (let h = resultBis.length - 1; h >= j; h--) {
@@ -171,10 +172,16 @@ let separateOp = (string) => {
                         if (!parenthesisOp.includes('(') && !parenthesisOp.includes(')')) {
                             // Replaces in 'result' the most nested parenthesis block by the result of its operation
                             result.splice(j, parenthesisOp.length + 2, calc(parenthesisOp))
-                        } else {
-                            resultBis.splice(h, 1)
-                            break
-                        }
+                        } //else {
+                        //     resultBis.splice(h, 1)
+                        // }
+
+                        // Removing the else statement creates a bug because we use the index 'j' 
+                        // as a starting point to splice 'result'. With a testcase like 
+                        // (3+3)*(2+2) for example, this code works for the first block of 
+                        // parenthesis, but then when we try to apply it for the second block, 
+                        // 'j' in 'resultBis' will not point to the same element as in 'result', 
+                        // resulting in a infinite loop created by the condition of the while
                     }
                 }
             }
