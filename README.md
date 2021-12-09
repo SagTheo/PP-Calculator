@@ -28,3 +28,6 @@ Difficulties encountered:
             --> ! bug found ! : testcase like (3+3)*(2+2) creates an infinite loop
                     -sorted out: removed the break statement in the last else of separateOp()
                         --> creates another infinite loop for other testcases like 3*(3*(3+3))
+                            -->sorted out: first of: got rid of the shallow copy of the array 'result' (not needed in the end) -> this way we only have to work with one array and we don't have to worry about finding the index at which to replace the block of parenthesis in the original array
+                                           then: once a block of parenthesis has been replaced by the result of the
+                            operation that it contained, we simply set j at -1, so for the next iteration it starts at the beginning of the array again, and the whole process can repeat itself until all parenthesis have been delt with
