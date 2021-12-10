@@ -49,59 +49,26 @@ parenthesis.forEach(par => {
 // calc() does the operation
 // ! Doesn't handle the priority of operators yet !
 let calc = (array) => {
-    let operand = ''
-    let finalResult = []
-    for (let i = 0; i < array.length; i++) { //Test to see if this block is actually useful
-                                             //Could go directly to the second for loop of this function using the array
-                                             // passed as a parameter ?
-        switch (array[i]) {
-            case '+':
-                finalResult.push(operand)
-                operand = ''
-                finalResult.push('+')
-                break;
-            case '-':
-                finalResult.push(operand)
-                operand = ''
-                finalResult.push('-')
-                break;
-            case 'x':
-                finalResult.push(operand)
-                operand = ''
-                finalResult.push('*')
-                break;
-            case '/':
-                finalResult.push(operand)
-                operand = ''
-                finalResult.push('/')
-                break;
-            default:
-                operand += array[i]
-        }
-    }
-    finalResult.push(operand)
-    console.log(finalResult)
-
-    let resultToDisplay = JSON.parse(finalResult[0])
-    for (let j = 1; j < finalResult.length; j++) { // To handle priority of operators -> use for loop to check for 
+    let resultToDisplay = JSON.parse(array[0])
+    for (let j = 1; j < array.length; j++) { // To handle priority of operators -> use for loop to check for 
                                                    // multiplication or division symbol, do the math for operands on 
                                                    // each side of the operator, then go on with the rest of the operation
                                                    // which should, at this point, only be additons or substractions
-        switch (finalResult[j]) {
+        switch (array[j]) {
             case '+':
-                resultToDisplay += JSON.parse(finalResult[j + 1])
+                resultToDisplay += JSON.parse(array[j + 1])
                 j++
                 break;
             case '-':
-                resultToDisplay -= JSON.parse(finalResult[j + 1])
+                resultToDisplay -= JSON.parse(array[j + 1])
                 j++
                 break;
-            case '*':
-                resultToDisplay = resultToDisplay * JSON.parse(finalResult[j + 1])
+            case 'x':
+                resultToDisplay = resultToDisplay * JSON.parse(array[j + 1])
                 j++
                 break;
             case '/':
-                resultToDisplay = resultToDisplay / JSON.parse(finalResult[j + 1])
+                resultToDisplay = resultToDisplay / JSON.parse(array[j + 1])
                 j++
                 break;
         }
@@ -179,7 +146,6 @@ let separateOp = (string) => {
             }
         }
     }
-    console.log(result)
     return calc(result)
 }
 
