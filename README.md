@@ -11,9 +11,10 @@ To-do:
 -handle the fact that user can click on an operator more than once 
         --> creates a bug: even if extra operator is removed thanks to the delete button, console throws an error --> has to do with the blank spaces added on each side of the operators(see Difficulties encountered) - done 
 -make delete button functional - done
--handle really big numbers
+-handle really big numbers - done
 -display characters on the screen as the user clicks on them - done
 -handle multiple operators in one operation - done
+-style the calculator
 -make app responsive
 
 

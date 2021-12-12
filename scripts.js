@@ -61,8 +61,6 @@ let calc = (array) => {
         }
     }
 
-
-
     let resultToDisplay = JSON.parse(array[0])
     for (let j = 1; j < array.length; j++) { 
         switch (array[j]) {
