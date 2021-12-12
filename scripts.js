@@ -47,30 +47,33 @@ parenthesis.forEach(par => {
 
 // Functions
 // calc() does the operation
-// ! Doesn't handle the priority of operators yet !
 let calc = (array) => {
+    while (array.includes('x') || array.includes('/')) { // Handles priority of operators
+        if (array.includes('x')) {
+            const x = array.indexOf('x')
+            const multiplication = JSON.parse(array[x - 1]) * JSON.parse(array[x + 1])
+            array.splice(x - 1, 3, multiplication)
+        }
+        if (array.includes('/')) {
+            const divisor = array.indexOf('/')
+            const division = JSON.parse(array[divisor - 1]) / JSON.parse(array[divisor + 1])
+            array.splice(divisor - 1, 3, division)
+        }
+    }
+
+
+
     let resultToDisplay = JSON.parse(array[0])
-    for (let j = 1; j < array.length; j++) { // To handle priority of operators -> use for loop to check for 
-                                                   // multiplication or division symbol, do the math for operands on 
-                                                   // each side of the operator, then go on with the rest of the operation
-                                                   // which should, at this point, only be additons or substractions
+    for (let j = 1; j < array.length; j++) { 
         switch (array[j]) {
-            case '+':
+            case '+': 
                 resultToDisplay += JSON.parse(array[j + 1])
                 j++
-                break;
+                break
             case '-':
                 resultToDisplay -= JSON.parse(array[j + 1])
                 j++
-                break;
-            case 'x':
-                resultToDisplay = resultToDisplay * JSON.parse(array[j + 1])
-                j++
-                break;
-            case '/':
-                resultToDisplay = resultToDisplay / JSON.parse(array[j + 1])
-                j++
-                break;
+                break
         }
     }
     return JSON.stringify(resultToDisplay)

@@ -6,7 +6,7 @@ Goal here is to practice logical thinking and JS
 To-do:
 
 -handle decimals - done
--handle priority of operators
+-handle priority of operators - done
 -handle use of parenthesis(see Difficulties encountered) - done
 -handle the fact that user can click on an operator more than once 
         --> creates a bug: even if extra operator is removed thanks to the delete button, console throws an error --> has to do with the blank spaces added on each side of the operators(see Difficulties encountered) - done 
