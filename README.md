@@ -14,8 +14,8 @@ To-do:
 -handle really big numbers - done
 -display characters on the screen as the user clicks on them - done
 -handle multiple operators in one operation - done
--style the calculator
--make app responsive
+-style the calculator - done
+-make app responsive - done
 
 
 Difficulties encountered:
